@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-def getIdentity(nameset=["us"], country=["us"], gender="50", minage="19", maxage="85"):
+def getIdentity(nameset=["gr"], country=["gr"], gender="50", minage="19", maxage="85"):
 	
 	namesets = ['us', 'ar', 'au', 'br', 'celat', 'ch', 'zhtw', 'hr', 'cs', 'dk', 'nl', 'en', 'er', 'fi', 'fr', 'gr', 'gl', 'sp', 'hobbit', 'hu', 'is', 'ig', 'it', 'jpja', 'tlh', 'ninja', 'no', 'fa', 'pl', 'ru', 'rucyr', 'gd', 'sl', 'sw', 'th', 'vn']
 
@@ -60,50 +60,48 @@ def getIdentity(nameset=["us"], country=["us"], gender="50", minage="19", maxage
 	city = fullAddress[2].split(", ")[0]
 	state = fullAddress[2].split(" ")[1]
 	zip = fullAddress[2].split(" ")[2]
-	motherMaidenName = soup.find("dd").text
-	ssn = soup.find_all("dd")[1].text.split(" ")[0]
-	coords = soup.find("a", id="geo").text
-	phone = soup.find_all("dd")[3].text
-	countryCode = soup.find_all("dd")[4].text
-	birthday = soup.find_all("dd")[5].text
+
+	idx = len(soup.find_all("dd")) + 1 - 32;
+	print(idx)
+
+	phone = soup.find_all("dd")[idx].text
+	countryCode = soup.find_all("dd")[idx + 1].text
+	birthday = soup.find_all("dd")[idx + 2].text
 	birthdayYear = birthday.split(" ")[2]
 	birthdayMonth = birthday.split(" ")[0]
 	birthdayDay = birthday.split(" ")[1][:-1]
-	age = soup.find_all("dd")[6].text.split(" ")[0]
-	zodiac = soup.find_all("dd")[7].text
-	email = soup.find_all("dd")[8].contents[0]
-	username = soup.find_all("dd")[9].text
-	password = soup.find_all("dd")[10].text
-	website = soup.find_all("dd")[11].text
-	useragent = soup.find_all("dd")[12].text
-	card = soup.find_all("dd")[13].text
-	expiration = soup.find_all("dd")[14].text
-	cvv2 = soup.find_all("dd")[15].text
-	company = soup.find_all("dd")[16].text
-	occupation = soup.find_all("dd")[17].text
-	height = soup.find_all("dd")[18].text.split(" ")[0] + soup.find_all("dd")[18].text.split(" ")[1]
-	heightcm = soup.find_all("dd")[18].text.split("(")[1][:-1].split(" ")[0]
-	weight = soup.find_all("dd")[19].text.split(" ")[0]
-	weightkg = soup.find_all("dd")[19].text.split("(")[1].split(" ")[0]
-	blood = soup.find_all("dd")[20].text
-	ups = soup.find_all("dd")[21].text
-	westernunion = soup.find_all("dd")[22].text
-	moneygram = soup.find_all("dd")[23].text
-	color = soup.find_all("dd")[24].text
-	vehicle = soup.find_all("dd")[25].text
-	guid = soup.find_all("dd")[26].text
+	age = soup.find_all("dd")[idx + 3].text.split(" ")[0]
+	zodiac = soup.find_all("dd")[idx + 4].text
+	email = soup.find_all("dd")[idx + 5].contents[0]
+	username = soup.find_all("dd")[idx + 6].text
+	password = soup.find_all("dd")[idx + 7].text
+	website = soup.find_all("dd")[idx + 8].text
+	useragent = soup.find_all("dd")[idx + 9].text
+	card = soup.find_all("dd")[idx + 10].text
+	expiration = soup.find_all("dd")[idx + 11].text
+	cvv2 = soup.find_all("dd")[idx + 12].text
+	company = soup.find_all("dd")[idx + 13].text
+	occupation = soup.find_all("dd")[idx + 14].text
+	height = soup.find_all("dd")[idx + 15].text.split(" ")[0] + soup.find_all("dd")[18].text.split(" ")[1]
+	heightcm = soup.find_all("dd")[idx + 15].text.split("(")[1][:-1].split(" ")[0]
+	weight = soup.find_all("dd")[idx + 16].text.split(" ")[0]
+	weightkg = soup.find_all("dd")[idx + 16].text.split("(")[1].split(" ")[0]
+	blood = soup.find_all("dd")[idx + 17].text
+	ups = soup.find_all("dd")[idx + 18].text
+	westernunion = soup.find_all("dd")[idx + 19].text
+	moneygram = soup.find_all("dd")[idx + 20].text
+	color = soup.find_all("dd")[idx + 21].text
+	vehicle = soup.find_all("dd")[idx + 22].text
+	guid = soup.find_all("dd")[idx + 23].text
 	
 	class identity:
-		def __init__(self, name, address, street, city, state, zip, motherMaidenName, ssn, coords, phone, countryCode, birthday, birthdayMonth, birthdayDay, birthdayYear, age, zodiac, email, username, password, website, useragent, card, expiration, cvv2, company, occupation, height, heightcm, weight, weightkg, blood, ups, westernunion, moneygram, color, vehicle, guid):
+		def __init__(self, name, address, street, city, state, zip, phone, countryCode, birthday, birthdayMonth, birthdayDay, birthdayYear, age, zodiac, email, username, password, website, useragent, card, expiration, cvv2, company, occupation, height, heightcm, weight, weightkg, blood, ups, westernunion, moneygram, color, vehicle, guid):
 			self.name = name
 			self.address = address
 			self.street = street
 			self.city = city
 			self.state = state
 			self.zip = zip
-			self.motherMaidenName = motherMaidenName
-			self.ssn = ssn
-			self.coords = coords
 			self.phone = phone
 			self.countryCode = countryCode
 			self.birthday = birthday
@@ -134,5 +132,7 @@ def getIdentity(nameset=["us"], country=["us"], gender="50", minage="19", maxage
 			self.vehicle = vehicle
 			self.guid = guid
 	
-	iden = identity(name, address, street, city, state, zip, motherMaidenName, ssn, coords, phone, countryCode, birthday, birthdayMonth, birthdayDay, birthdayYear, age, zodiac, email, username, password, website, useragent, card, expiration, cvv2, company, occupation, height, heightcm, weight, weightkg, blood, ups, westernunion, moneygram, color, vehicle, guid)
+	iden = identity(name, address, street, city, state, zip, phone, countryCode, birthday, birthdayMonth, birthdayDay, birthdayYear, age, zodiac, email, username, password, website, useragent, card, expiration, cvv2, company, occupation, height, heightcm, weight, weightkg, blood, ups, westernunion, moneygram, color, vehicle, guid)
 	return iden
+
+print(getIdentity().weight)
