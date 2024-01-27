@@ -62,7 +62,6 @@ def getIdentity(nameset=["gr"], country=["gr"], gender="50", minage="19", maxage
 	zip = fullAddress[2].split(" ")[2]
 
 	idx = len(soup.find_all("dd")) + 1 - 32;
-	print(idx)
 
 	phone = soup.find_all("dd")[idx].text
 	countryCode = soup.find_all("dd")[idx + 1].text
@@ -134,5 +133,3 @@ def getIdentity(nameset=["gr"], country=["gr"], gender="50", minage="19", maxage
 	
 	iden = identity(name, address, street, city, state, zip, phone, countryCode, birthday, birthdayMonth, birthdayDay, birthdayYear, age, zodiac, email, username, password, website, useragent, card, expiration, cvv2, company, occupation, height, heightcm, weight, weightkg, blood, ups, westernunion, moneygram, color, vehicle, guid)
 	return iden
-
-print(getIdentity().weight)
